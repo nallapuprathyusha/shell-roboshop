@@ -47,8 +47,14 @@ CHECK $? "nodejs enable status::"
 dnf install nodejs -y  &>> $LOG_FILE
 CHECK $? "nodejs installed status::"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-CHECK $? "systemUser creation status::"
+id roboshop &>>$LOG_FILE
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+    VALIDATE $? "Creating system user"
+else
+    echo -e "User already exist ... $Y SKIPPING $N"
+fi
+
 
 mkdir /app 
 CHECK $? "app directory status::"
