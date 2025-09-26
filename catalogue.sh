@@ -14,7 +14,7 @@ LOG_FILE=$LOG_FOLDER/$SCRIPT_NAME.log
 
 mkdir -p  $LOG_FOLDER
 
-#echo  $LOG_FILE
+echo  $LOG_FILE
 #tee -a <File_name> -  display output and stores in file
 #&>> -<file_name> dont display the output ,just stores the output
 
