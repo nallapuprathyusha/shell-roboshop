@@ -2,6 +2,11 @@
 
 USERID=$(id -u)
 
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
 
 LOG_FOLDER="/var/log/shell-scripting"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
@@ -23,10 +28,11 @@ fi
 CHECK()
 {
     
-    if [ $? -ne 0 ]; then
-        echo "$2 is failure" | tee -a $LOG_FILE
+    if [ $1 -ne 0 ]; then
+        echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE
+        exit 1
     else
-        echo "$2 is success" | tee -a $LOG_FILE
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
     fi
 }
 
