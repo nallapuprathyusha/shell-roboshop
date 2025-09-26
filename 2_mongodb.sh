@@ -22,7 +22,7 @@ CHECK()
 dnf list installed mongodb-org
 CHECK $? "Mongodb check"
 
-cp mongo.repo /etc/yum/respos.d/mongo.repo
+cp ./mongo.repo /etc/yum/respos.d/mongo.repo
 CHECK $? "copying mongo repo file to repository"
 
 dnf install mongodb-org -y
