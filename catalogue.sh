@@ -26,7 +26,7 @@ fi
 CHECK()
 {
     
-    if [ $1 -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE
         exit 1
     else
