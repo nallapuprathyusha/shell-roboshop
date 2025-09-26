@@ -35,17 +35,37 @@ CHECK()
     
 }
 
-dnf list installed nodejs
+dnf list installed nodejs &>> $LOG_FILE
 CHECK $? "nodejs installation status::"
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $LOG_FILE
 CHECK $? "nodejs disabl status::"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>> $LOG_FILE
 CHECK $? "nodejs enable status::"
 
-dnf install nodejs -y 
+dnf install nodejs -y  &>> $LOG_FILE
 CHECK $? "nodejs installed status::"
 
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+CHECK $? "systemUser creation status::"
 
+mkdir /app 
+CHECK $? "app directory status::"
+
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+CHECK $? "Downloading files"
+
+cd /app
+CHECK $? "Going into directory"
+
+unzip /tmp/catalogue.zip
+CHECK $? "Unzip the files in app directory"
+
+
+npm install 
+CHECK $? "Installing denpendencies"
+
+cp /root/shell-roboshop/catalogue.service /etc/systemd/sytem/
+CHECK $? "copying catalogue serice file to systemd"
 
