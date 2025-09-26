@@ -36,13 +36,30 @@ CHECK()
 #dnf list installed nginx
 #CHECK $? "checking for nginx"
 
-dnf module disable nginx -y
+dnf module disable nginx -y &>>$LOG_FILE
 CHECK $? "disabling nginx"
 
-dnf module enable nginx:1.24 -y
+dnf module enable nginx:1.24 -y &>>$LOG_FILE
 CHECK $? "enabling for nginx"
 
-dnf install nginx -y
+dnf install nginx -y &>>$LOG_FILE
 CHECK $? "installing nginx"
 
+systemctl enable nginx &>>$LOG_FILE
+CHECK $? "enabling nginx"
+
+systemctl start nginx &>>$LOG_FILE
+CHECK $? "starting nginx"
+
+rm -rf /usr/share/nginx/html/* 
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
+cd /usr/share/nginx/html 
+unzip /tmp/frontend.zip &>>$LOG_FILE
+CHECK $? "Downloading frontend"
+
+cp /root/shell-roboshop/nginx.conf /usr/share/nginx/html/
+CHECK $? "copying conf files"
+
+systemctl restart nginx 
+CHECK $? "restarting nginx"
 
