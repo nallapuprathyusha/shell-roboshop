@@ -13,7 +13,7 @@ CHECK()
     if [ $? -ne 0 ]; then
         echo "$2 is failure" 
     else
-        echo "$? is success"
+        echo "$2 is success"
     fi
 }
 
@@ -22,7 +22,7 @@ CHECK()
 dnf list installed mongodb-org
 CHECK $? "Mongodb check"
 
-
+touch /etc/yum.repos.d/mongo.repo
 cp /root/shell-roboshop/mongo.repo /etc/yum.repos.d/mongo.repo
 CHECK $? "copying mongo repo file to repository"
 
