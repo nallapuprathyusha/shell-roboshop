@@ -3,7 +3,7 @@
 AMI_ID="ami-09c813fb71547fc4f"
 SG_ID="sg-029dab38d39f77779"  # replace with your SG ID
 DOMAIN="prathyusha.fun"  # replace with your domain name
-HOSTZONE="Z0994508312PR2YKTSFA1"
+HOSTZONE="Z0994508312PR2YKTSFA1" # replace with your hosted zone name
 
 for instance in $@
 do 
