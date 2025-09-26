@@ -65,34 +65,33 @@ CHECK $? "Downloading files"
 cd /app
 CHECK $? "Going into directory"
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOG_FILE
 CHECK $? "Unzip the files in app directory"
 
 
-npm install 
+npm install &>> $LOG_FILE
 CHECK $? "Installing denpendencies"
 
-cp /root/shell-roboshop/catalogue.service /etc/systemd/system/
+cp /root/shell-roboshop/catalogue.service /etc/systemd/system/ 
 CHECK $? "copying catalogue serice file to systemd"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> $LOG_FILE
 CHECK $? "daemon-reload"
 
-systemctl enable catalogue
+systemctl enable catalogue &>> $LOG_FILE
 CHECK $? "enabling catalogue" 
 
-systemctl start catalogue
+systemctl start catalogue &>> $LOG_FILE
 CHECK $? "starting catalogue"
-
 
 
 cp /root/shell-roboshop/mongo.repo /etc/yum.repos.d
 CHECK $? "copying mongo repo file to repository"
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y &>> $LOG_FILE
 CHECK $? "Installing mongo client"
 
-mongosh --host mongo.prathyusha.fun </app/db/master-data.js
+mongosh --host mongo.prathyusha.fun </app/db/master-data.js &>> $LOG_FILE
 CHECK $? "loading schema" #adding products details in mongodb database server
 
 
