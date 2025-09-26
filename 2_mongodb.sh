@@ -22,6 +22,7 @@ CHECK()
 dnf list installed mongodb-org
 CHECK $? "Mongodb check"
 
+touch /etc/yum/respos.d/mongo.repo
 cp /root/shell-roboshop/mongo.repo /etc/yum/respos.d/mongo.repo
 CHECK $? "copying mongo repo file to repository"
 
