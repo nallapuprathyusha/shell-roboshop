@@ -23,7 +23,7 @@ dnf list installed mongodb-org
 CHECK $? "Mongodb check"
 
 #touch /etc/yum.repos.d/mongo.repo
-cp /root/shell-roboshop/mongo.repo /etc/yum.repos.d
+cp /root/shell-roboshop/3_mongo.repo /etc/yum.repos.d
 CHECK $? "copying mongo repo file to repository"
 
 dnf install mongodb-org -y
