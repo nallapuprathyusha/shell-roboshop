@@ -85,6 +85,15 @@ systemctl start catalogue
 CHECK $? "starting catalogue"
 
 
+
+cp /root/shell-roboshop/mongo.repo /etc/yum.repos.d
+CHECK $? "copying mongo repo file to repository"
+
 dnf install mongodb-mongosh -y
 CHECK $? "Installing mongo client"
+
+mongosh --host mongo.prathyusha.fun </app/db/master-data.js
+CHECK $? "loading schema" #adding products details in mongodb database server
+
+
 
