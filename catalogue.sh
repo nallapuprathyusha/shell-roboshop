@@ -25,13 +25,13 @@ fi
 
 CHECK()
 {
-    
-    if [ $? -ne 0 ]; then
+    if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE
-        
+        exit 1
     else
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
     fi
+    
 }
 
 dnf list installed nodejs
@@ -46,5 +46,10 @@ CHECK $? "nodejs enable status::"
 dnf install nodejs -y 
 CHECK $? "nodejs installed status::"
 
-
+#if [ $? -ne 0 ]; then
+ #       echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE
+        
+ #   else
+  #      echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
+  #  fi
 
