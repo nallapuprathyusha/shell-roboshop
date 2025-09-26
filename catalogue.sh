@@ -35,4 +35,16 @@ CHECK()
 }
 
 dnf list installed nodejs
-CHECK $? "nodejs installation check"
+CHECK $? "nodejs installation status::"
+
+dnf module disable nodejs -y
+CHECK $? "nodejs disabl status::"
+
+dnf module enable nodejs:20 -y
+CHECK $? "nodejs enable status::"
+
+dnf install nodejs -y 
+CHECK $? "nodejs installed status::"
+
+
+
