@@ -30,7 +30,7 @@ dnf install mongodb-org -y
 CHECK $? "mongo installed"
 
 systemctl enable mongod
-VALIDATE $? "Enable MongoDB"
+CHECK $? "Enable MongoDB"
 
 
 systemctl start mongod 
