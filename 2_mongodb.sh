@@ -20,7 +20,7 @@ CHECK()
 
 
 
-dnf list isntalled mongodb-org
+dnf list installed mongodb-org
 CHECK $? "Mongodb check"
 
 cp mongo.repo /etc/yum/respos.d/mongo.repo
