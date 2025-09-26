@@ -6,7 +6,9 @@ USERID=$(id -u)
 LOG_FLODER="/var/logs/shell-scripting"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f )
 
-LOG_FILE_NAME=$LOG_FLODER/$SCRIPT_NAME.log
+LOG_FILE=$LOG_FLODER/$SCRIPT_NAME.log
+
+mkdir -p  $LOG_FLODER
 echo  $LOG_FILE_NAME
 
 
