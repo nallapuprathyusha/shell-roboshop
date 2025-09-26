@@ -3,13 +3,13 @@
 USERID=$(id -u)
 
 
-LOG_FLODER="/var/logs/shell-scripting"
-SCRIPT_NAME=$( echo $0 | cut -d "." -f )
+LOG_FOLDER="/var/log/shell-scripting"
+SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 
-LOG_FILE=$LOG_FLODER/$SCRIPT_NAME.log
+LOG_FILE=$LOG_FOLDER/$SCRIPT_NAME.log
 
-mkdir -p  $LOG_FLODER
-echo  $LOG_FILE_NAME
+mkdir -p  $LOG_FOLDER
+echo  $LOG_FILE
 
 
 if [ $USERID -ne 0 ]; then
