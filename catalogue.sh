@@ -75,4 +75,16 @@ CHECK $? "Installing denpendencies"
 cp /root/shell-roboshop/catalogue.service /etc/systemd/system/
 CHECK $? "copying catalogue serice file to systemd"
 
-#/etc/systemd/system/catalogue.service
+systemctl daemon-reload
+CHECK $? "daemon-reload"
+
+systemctl enable catalogue
+CHECK $? "enabling catalogue" 
+
+systemctl start catalogue
+CHECK $? "starting catalogue"
+
+
+dnf install mongodb-mongosh -y
+CHECK $? "Installing mongo client"
+
