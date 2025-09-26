@@ -6,7 +6,7 @@ USERID=$(id -u)
 LOG_FLODER="etc/var/logs/shell-scripting"
 SCRIPT_NAME= echo($0 | cut -d "." -f)
 LOG_FILE_NAME=$LOG_FLODER/$SCRIPT_NAME.log
-echo  $LOG_FILE_NAME
+echo  "$LOG_FILE_NAME"
 
 
 if [ $USERID -ne 0 ]; then
