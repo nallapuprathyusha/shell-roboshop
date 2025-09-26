@@ -33,8 +33,8 @@ CHECK()
     
 }
 
-dnf list installed nginx
-CHECK $? "checking for nginx"
+#dnf list installed nginx
+#CHECK $? "checking for nginx"
 
 dnf module disable nginx -y
 CHECK $? "disabling nginx"
