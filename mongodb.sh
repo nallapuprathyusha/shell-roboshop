@@ -57,5 +57,5 @@ CHECK $? "mongo started"
 #SED
 sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 
-systemctl restrat mongod &>> $LOG_FILE
+systemctl restart mongod &>> $LOG_FILE
 CHECK $? "restart mongod"
