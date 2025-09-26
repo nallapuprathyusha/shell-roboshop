@@ -5,16 +5,16 @@ USERID=$(id -u)
 
 if [ $USERID -ne 0 ]; then
     echo "your not root user please switch to root user"
-if
+fi
 
 
 CHECK()
 {
     
     if [ $? -ne 0 ]; then
-    echo "$2 is failure" 
+        echo "$2 is failure" 
     else
-    echo "$? is success"
+        echo "$? is success"
     fi
 }
 
