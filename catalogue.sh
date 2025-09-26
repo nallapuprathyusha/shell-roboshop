@@ -47,7 +47,7 @@ CHECK $? "nodejs enable status::"
 dnf install nodejs -y  &>> $LOG_FILE
 CHECK $? "nodejs installed status::"
 
-#checking user already available or not if not avaible it will create if available it will skip
+#checking user already available or not if not available it will create if available it will skip
 id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
@@ -59,10 +59,10 @@ fi
 mkdir -p /app 
 CHECK $? "app directory status::"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 CHECK $? "Downloading files"
 
-cd /app
+cd /app &>> $LOG_FILE
 CHECK $? "Going into directory"
 
 unzip /tmp/catalogue.zip &>> $LOG_FILE
