@@ -31,7 +31,6 @@ CHECK()
 }
 
 
-
 dnf list installed mongodb-org &>> $LOG_FILE
 CHECK $? "Mongodb check"
 
@@ -49,6 +48,7 @@ CHECK $? "Enable MongoDB"
 systemctl start mongod &>> $LOG_FILE
 CHECK $? "mongo started"
 
+#SED
 sed -i 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
 
 systemctl daemon-reload &>> $LOG_FILE
