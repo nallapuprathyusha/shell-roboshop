@@ -8,13 +8,16 @@ if [ $USERID -ne 0 ]; then
 if
 
 
-CHECK(){
+CHECK()
+{
     
     if [ $? -ne 0 ]; then
     echo "$2 is failure" 
     else
     echo "$? is success"
+    fi
 }
+
 
 
 dnf list isntalled mongodb-org
