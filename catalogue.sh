@@ -56,7 +56,6 @@ else
     echo -e "User already exist ... $Y SKIPPING $N"
 fi
 
-
 mkdir /app 
 CHECK $? "app directory status::"
 
