@@ -61,7 +61,7 @@ mkdir -p /app &>>$LOG_FILE
 CHECK $? "Creating App directory"
 
 rm -rf /app/*
-CHECK $? "Creating App directory"
+CHECK $? "removing old files in  App directory"
 
 curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
 CHECK $? "Dowloading backend files"
