@@ -40,7 +40,7 @@ CHECK $? "installing maven"
 
 id roboshop &>>$$LOG_FILE
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     CHECK $? "Adding Application user"
 else
     echo "User already exist"
