@@ -47,7 +47,7 @@ else
 
 fi
 
-mkdir /app &>>$LOG_FILE
+mkdir  -p /app &>>$LOG_FILE
 CHECK $? "creating app directory"
 
 rm -rf app/* &>>$LOG_FILE
