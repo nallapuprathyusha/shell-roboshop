@@ -49,7 +49,14 @@ CHECK $? "enabling redis"
 dnf install redis -y  &>> $LOG_FILE
 CHECK $? "installing redis"
 
-sec -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf
+#sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf
+# sed -i -e 's/127.0.0.1/0.0.0.0 -e /protected-mode/c protected-mode no'/etc/redis/redis.conf &>>$log
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf &>>$log
+validate $? "Redis Enabling Public Access"
+
+sed -i '/protected-mode/c protected-mode no' /etc/redis/redis.conf &>>$log
+validate $? "Protected Mode off"
+
 
 systemctl enable redis  &>> $LOG_FILE
 CHECK $? "Enabling redis"
