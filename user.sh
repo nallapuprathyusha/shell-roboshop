@@ -51,7 +51,7 @@ CHECK $? "intall nodejs"
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
 CHECK $? "adding system user"
 
-mkdir /app  &>> $LOG_FILE
+mkdir -p /app  &>> $LOG_FILE
 CHECK $? "creating app director"
 
 
@@ -72,6 +72,9 @@ CHECK $? "installing denpencies"
 
 cp /root/shell-roboshop/user.service /etc/systemd/system/user.service &>> $LOG_FILE
 CHECK $? "Copy systemctl service"
+
+systemctl daemon-reload
+CHECK $? "daemon reload"
 
 systemctl enable user &>> $LOG_FILE
 CHECK $? "Enabling user"
