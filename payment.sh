@@ -44,7 +44,7 @@ if [$? -ne 0]; then
     CHECK $? "creating system user"
 else
     echo "system user already exist .Skipping"
-
+fi
 
 mkdir -p /app   &>> $LOG_FILE
 CHECK $? "creating app directory"
@@ -75,5 +75,5 @@ CHECK $? "daemon reloading"
 systemctl enable payment    &>> $LOG_FILE
 CHECK $? "enabling payment"
 
-systemctl start payment   &>> $LOG_FILE
+systemctl start payment  &>> $LOG_FILE
 CHECK $? "starting payment"
