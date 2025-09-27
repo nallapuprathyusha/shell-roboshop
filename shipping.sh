@@ -47,46 +47,46 @@ else
 
 fi
 
-mkdir /app 
+mkdir /app &>>$LOG_FILE
 CHECK $? "creating app directory"
 
-rm -rf app/*
+rm -rf app/* &>>$LOG_FILE
 CHECK $? "removing old files in app directory"
 
-curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip  &>>$LOG_FILE
 CHECK $? "downloading files"
 
-cd /app
+cd /app &>>$LOG_FILE
 CHECK $? "moving to app directory" 
 
-unzip /tmp/shipping.zip
+unzip /tmp/shipping.zip &>>$LOG_FILE
 CHECK $? "unziping the files"
 
-mvn clean package 
+mvn clean package &>>$LOG_FILE
 CHECK $? "generating bulid file"
 
-mv target/shipping-1.0.jar shipping.jar 
+mv target/shipping-1.0.jar shipping.jar  &>>$LOG_FILE
 CHECK $? "moving bulid file"
 
 cp /root/shell-roboshop/shipping.service /etc/systemd/system/shipping.service
 CHECK $? "creating shipping services"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$LOG_FILE
 CHECK $? "daemon reload"
 
-dnf install mysql -y 
+dnf install mysql -y &>>$LOG_FILE
 CHECK $? "installing mysql client"
 
 mysql -h mysql.prathyusha.fun -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOG_FILE
-validate $? "Loading Schema"
+CHECK $? "Loading Schema"
 
 
 mysql -h mysql.prathyusha.fun -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOG_FILE
-validate $? "Loading App User data"
+CHECK $? "Loading App User data"
 
 mysql -h mysql.prathyusha.fun -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
-validate $? "Loading Master data"
+CHECK $? "Loading Master data"
 
 
 systemctl restart shipping &>>$LOG_FILE
-validate $? "restarting shipping"
+CHECK $? "restarting shipping"
