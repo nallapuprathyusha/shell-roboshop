@@ -35,48 +35,48 @@ CHECK()
     
 }
 
-dnf list installed nodejs
+dnf list installed nodejs  &>> $LOG_FILE
 CHECK $? "checking availability of nodejs"
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $LOG_FILE
 CHECK $? "diable nodejs"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>> $LOG_FILE
 CHECK $? "enable nodejs"
 
-dnf install nodejs
+dnf install nodejs -y &>> $LOG_FILE
 CHECK $? "intall nodejs"
 
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
 CHECK $? "adding system user"
 
-mkdir /app 
+mkdir /app  &>> $LOG_FILE
 CHECK $? "creating app director"
 
 
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip  &>> $LOG_FILE
 CHECK $? "Downloading user application"
 
-cd /app 
+cd /app &>> $LOG_FILE
 CHECK $? "Changing directory"
 
-rm -rf /app/*
+rm -rf /app/* &>> $LOG_FILE
 CHECK $? "Removing existing code"
 
-unzip /tmp/user.zip
+unzip /tmp/user.zip &>> $LOG_FILE
 CHECK $? "unziping files"
 
-npm install 
+npm install  &>> $LOG_FILE
 CHECK $? "installing denpencies"
 
-cp /root/shell-roboshop/user.service /etc/systemd/system/user.service
+cp /root/shell-roboshop/user.service /etc/systemd/system/user.service &>> $LOG_FILE
 CHECK $? "Copy systemctl service"
 
-systemctl enable user 
+systemctl enable user &>> $LOG_FILE
 CHECK $? "Enabling user"
 
-systemctl start user
+systemctl start user &>> $LOG_FILE
 CHECK $? "Starting user"
 
 
