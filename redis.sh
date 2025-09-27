@@ -37,10 +37,10 @@ CHECK()
     fi
 }
 
-dnf list installed redis &>> $LOG_FILE
+dnf list installed redis -y  &>> $LOG_FILE
 CHECK $? "checking availability for redis"
 
-dnf module disable redis &>> $LOG_FILE
+dnf module disable redis -y  &>> $LOG_FILE
 CHECK $? "disabling redis"
 
 dnf module enable redis:7 -y &>> $LOG_FILE
