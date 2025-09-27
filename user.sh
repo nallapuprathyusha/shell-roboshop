@@ -60,7 +60,6 @@ fi
 mkdir -p /app  &>> $LOG_FILE
 CHECK $? "creating app director"
 
-
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip  &>> $LOG_FILE
 CHECK $? "Downloading user application"
 
@@ -81,9 +80,6 @@ CHECK $? "Copy systemctl service"
 
 systemctl daemon-reload
 CHECK $? "daemon reload"
-
-sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
-CHECK $? "Allowing Remote connections to Redis"
 
 
 systemctl enable user &>> $LOG_FILE
