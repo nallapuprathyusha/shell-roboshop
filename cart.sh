@@ -62,7 +62,7 @@ CHECK $? "creating app director"
 rm -rf /app/* &>> $LOG_FILE
 CHECK $? "Removing existing code"
 
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>> $LOG_FILE
 CHECK $? "Downloading cart application"
 
 cd /app &>> $LOG_FILE
