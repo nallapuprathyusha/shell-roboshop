@@ -1,0 +1,92 @@
+#!bin/bash
+
+USERID=$(id -u)
+
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
+
+LOG_FOLDER="/var/log/shell-scripting"
+SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
+
+LOG_FILE=$LOG_FOLDER/$SCRIPT_NAME.log
+
+mkdir -p  $LOG_FOLDER
+
+#echo  $LOG_FILE
+#tee -a <File_name> -  display output and stores in file
+#&>> -<file_name> dont display the output ,just stores the output
+
+
+if [ $USERID -ne 0 ]; then
+    echo "your not root user please switch to root user" | tee -a $LOG_FILE
+fi
+
+CHECK()
+{
+    
+    if [ $1 -ne 0 ]; then
+        echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE
+        
+    else
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
+    fi
+}
+
+dnf install maven -y
+CHECK $? "installing maven"
+
+id roboshop &>>$$LOG_FILE
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log
+    CHECK $? "Adding Application user"
+else
+    echo "User already exist"
+
+fi
+
+mkdir /app 
+CHECK $? "creating app directory"
+
+rm -rf app/*
+CHECK $? "removing old files in app directory"
+
+curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
+CHECK $? "downloading files"
+
+cd /app
+CHECK $? "moving to app directory" 
+
+unzip /tmp/shipping.zip
+CHECK $? "unziping the files"
+
+mvn clean package 
+CHECK $? "generating bulid file"
+
+mv target/shipping-1.0.jar shipping.jar 
+CHECK $? "moving bulid file"
+
+cp /root/shell-roboshop/shipping.service /etc/systemd/system/shipping.service
+CHECK $? "creating shipping services"
+
+systemctl daemon-reload
+CHECK $? "daemon reload"
+
+dnf install mysql -y 
+CHECK $? "installing mysql client"
+
+mysql -h mysql.prathyusha.fun -uroot -pRoboShop@1 < /app/db/schema.sql &>>$LOG_FILE
+validate $? "Loading Schema"
+
+
+mysql -h mysql.prathyusha.fun -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$LOG_FILE
+validate $? "Loading App User data"
+
+mysql -h mysql.prathyusha.fun -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$LOG_FILE
+validate $? "Loading Master data"
+
+
+systemctl restart shipping &>>$LOG_FILE
+validate $? "restarting shipping"
