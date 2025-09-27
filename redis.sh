@@ -45,8 +45,12 @@ CHECK $? "enabling redis"
 dnf install redis -y  &>> $LOG_FILE
 CHECK $? "installing redis"
 
-sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/c protected-mode no' /etc/redis/redis.conf
-CHECK $? "Allowing Remote connections to Redis"
+# sed -i -e 's/127.0.0.1/0.0.0.0 -e /protected-mode/c protected-mode no'/etc/redis/redis.conf &>>$log
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf &>>$log
+CHECK $? "Redis Enabling Public Access"
+
+sed -i '/protected-mode/c protected-mode no' /etc/redis/redis.conf &>>$log
+validate $? "Protected Mode off"
 
 
 systemctl enable redis  &>> $LOG_FILE
