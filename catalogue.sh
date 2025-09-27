@@ -76,7 +76,7 @@ CHECK $? "Unzip the files in app directory"
 npm install &>> $LOG_FILE
 CHECK $? "Installing denpendencies"
 
-cp /root/shell-roboshop/catalogue.service /etc/systemd/system/ 
+cp /root/shell-roboshop/catalogue.service /etc/systemd/system/catalogue.service
 CHECK $? "copying catalogue serice file to systemd"
 
 systemctl daemon-reload &>> $LOG_FILE
