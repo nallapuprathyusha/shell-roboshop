@@ -56,10 +56,10 @@ else
     echo -e "User already exist ... $Y SKIPPING $N"
 fi
 
-mkdir -p /app  &>> $LOG_FILE
+mkdir -p /app  &>>$LOG_FILE
 CHECK $? "creating app director"
 
-rm -rf /app/* &>> $LOG_FILE
+rm -rf /app/* &>>$LOG_FILE
 CHECK $? "Removing existing code"
 
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip  &>> $LOG_FILE

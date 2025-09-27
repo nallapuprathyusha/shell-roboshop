@@ -35,13 +35,13 @@ CHECK()
     fi
 }
 
-dnf install mysql-server -y
+dnf install mysql-server -y  &>>$LOG_FILE
 CHECK $? "installing mysql"
 
-systemctl enable mysqld
+systemctl enable mysqld &>>$LOG_FILE
 CHECK $? "enabling mysqld"
 
-systemctl start mysqld
+systemctl start mysqld &>>$LOG_FILE
 CHECK $? "start mysqld" 
 
 mysql_secure_installation --set-root-pass RoboShop@1
