@@ -76,7 +76,7 @@ CHECK $? "Unzipping the app files"
 npm install &>>$LOG_FILE
 CHECK $? "installing dependency packages"
 
-cp /root/Roboshop/cart.service /etc/systemd/system/cart.service
+cp /root/shell-roboshop/cart.service /etc/systemd/system/cart.service
 CHECK $? "Copying the user service file to systemd"
 
 systemctl daemon-reload 
