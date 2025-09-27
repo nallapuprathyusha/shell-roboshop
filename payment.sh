@@ -50,7 +50,7 @@ fi
 mkdir -p /app   &>> $LOG_FILE
 CHECK $? "creating app directory"
 
-rm -rf app/*   &>> $LOG_FILE
+rm -rf /app/*   &>> $LOG_FILE
 CHECK $? "removing old files in directory"
 
 curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip    &>> $LOG_FILE
