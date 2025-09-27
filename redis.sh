@@ -51,10 +51,12 @@ CHECK $? "installing redis"
 
 #sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf
 # sed -i -e 's/127.0.0.1/0.0.0.0 -e /protected-mode/c protected-mode no'/etc/redis/redis.conf &>>$log
-sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf &>>$log
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf &>> $LOG_FILE
+CHECK $? "disabling redis"
 validate $? "Redis Enabling Public Access"
 
-sed -i '/protected-mode/c protected-mode no' /etc/redis/redis.conf &>>$log
+sed -i '/protected-mode/c protected-mode no' /etc/redis/redis.conf &>> $LOG_FILE
+CHECK $? "disabling redis"
 validate $? "Protected Mode off"
 
 
