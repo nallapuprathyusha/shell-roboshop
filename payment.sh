@@ -38,10 +38,15 @@ CHECK()
 dnf install python3 gcc python3-devel -y   &>> $LOG_FILE
 CHECK $? "installing python"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop   &>> $LOG_FILE
-CHECK $? "creating system user"
+id roboshop &>> $LOG_FILE
+if [$? -ne 0]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop   &>> $LOG_FILE
+    CHECK $? "creating system user"
+else
+    echo "system user already exist .Skipping"
 
-mkdir /app   &>> $LOG_FILE
+
+mkdir -p /app   &>> $LOG_FILE
 CHECK $? "creating app directory"
 
 rm -rf app/*   &>> $LOG_FILE
