@@ -24,7 +24,6 @@ if [ $USERID -ne 0 ]; then
     echo "your not root user please switch to root user" | tee -a $LOG_FILE
 fi
 
-
 CHECK()
 {
     
