@@ -48,8 +48,14 @@ dnf install nodejs -y &>> $LOG_FILE
 CHECK $? "intall nodejs"
 
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOG_FILE
-CHECK $? "adding system user"
+#checking user already available or not if not available it will create if available it will skip
+id roboshop &>>$LOG_FILE
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+    CHECK $? "Creating system user"
+else
+    echo -e "User already exist ... $Y SKIPPING $N"
+fi
 
 mkdir -p /app  &>> $LOG_FILE
 CHECK $? "creating app director"
