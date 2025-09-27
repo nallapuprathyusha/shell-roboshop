@@ -25,7 +25,7 @@ CHECK()
 {
     if [ $? -ne 0 ]; then
        echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE 
-       exit 1
+       
         
    else
         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
@@ -33,8 +33,8 @@ CHECK()
     
 }
 
-#dnf list installed nginx
-#CHECK $? "checking for nginx"
+dnf list installed nginx
+CHECK $? "checking for nginx"
 
 dnf module disable nginx -y &>>$LOG_FILE
 CHECK $? "disabling nginx"
@@ -57,7 +57,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>$LOG_FILE
 CHECK $? "Downloading frontend"
 
-cp /root/shell-roboshop/nginx.conf /usr/share/nginx/html/
+cp /root/shell-roboshop/nginx.conf /etc/nginx
 CHECK $? "copying conf files"
 
 systemctl restart nginx 
