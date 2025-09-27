@@ -35,56 +35,56 @@ CHECK()
     
 }
 
-dnf list installed nodejs  &>> $LOG_FILE
-CHECK $? "checking availability of nodejs"
+dnf list installed nodejs &>> $LOG_FILE
+CHECK $? "nodejs installation status::"
 
-dnf module disable nodejs -y &>> $LOG_FILE
-CHECK $? "diable nodejs"
+dnf module disable nodejs -y &>>$LOG_FILE
+CHECK $? "Disabling default nodejs"
 
-dnf module enable nodejs:20 -y &>> $LOG_FILE
-CHECK $? "enable nodejs"
+dnf module enable nodejs:20 -y &>>$LOG_FILE
+CHECK $? "Enabling nodejs 20 version"
 
-dnf install nodejs -y &>> $LOG_FILE
-CHECK $? "intall nodejs"
+dnf install nodejs -y &>>$LOG_FILE
+CHECK $? "Installing nodejs"
 
-#checking user already available or not if not available it will create if available it will skip
-id roboshop &>>$LOG_FILE
+id roboshop &>>$$LOG_FILE
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-    CHECK $? "Creating system user"
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$log
+    CHECK $? "Adding Application user"
 else
-    echo -e "User already exist ... $Y SKIPPING $N"
+    echo "User already exist"
+
 fi
 
-mkdir -p /app  &>> $LOG_FILE
-CHECK $? "creating app director"
 
-rm -rf /app/* &>> $LOG_FILE
-CHECK $? "Removing existing code"
+mkdir -p /app &>>$LOG_FILE
+CHECK $? "Creating App directory"
 
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
-CHECK $? "Downloading cart application"
+rm -rf /app/*
+CHECK $? "Creating App directory"
 
-cd /app &>> $LOG_FILE
-CHECK $? "Changing directory"
+curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$LOG_FILE
+CHECK $? "Dowloading backend files"
 
-unzip /tmp/cart.zip &>> $LOG_FILE
-CHECK $? "unziping files"
+cd /app &>>$LOG_FILE
+CHECK $? "Switching to app directory"
 
-npm install  &>> $LOG_FILE
-CHECK $? "installing denpencies"
-
-cp /root/shell-roboshop/cart.service /etc/systemd/system/cart.service &>>$LOG_FILE
-CHECK $? "Copy systemctl service"
-
-systemctl daemon-reload
-CHECK $? "daemon reload"
+unzip /tmp/cart.zip &>>$LOG_FILE
+CHECK $? "Unzipping the app files"
 
 
-systemctl enable cart &>> $LOG_FILE
-CHECK $? "Enabling cart"
+npm install &>>$LOG_FILE
+CHECK $? "installing dependency packages"
 
-systemctl start cart &>> $LOG_FILE
-CHECK $? "Starting cart"
+cp /root/Roboshop/cart.service /etc/systemd/system/cart.service
+CHECK $? "Copying the user service file to systemd"
+
+systemctl daemon-reload 
+CHECK $? "Reloading cart service"
+
+systemctl enable cart &>>$LOG_FILE
+CHECK $? "Enabling cart service"
 
 
+systemctl start cart &>>$LOG_FILE
+CHECK $? "Starting cart service"
