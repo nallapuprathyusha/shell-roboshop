@@ -59,19 +59,17 @@ fi
 mkdir -p /app 
 CHECK $? "app directory status::"
 
+rm -rf /app/*
+CHECK $? "Removing existing code"
+
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 CHECK $? "Downloading files"
 
 cd /app &>> $LOG_FILE
 CHECK $? "Going into directory"
 
-rm -rf /app/*
-CHECK $? "Removing existing code"
-
-
 unzip /tmp/catalogue.zip &>> $LOG_FILE
 CHECK $? "Unzip the files in app directory"
-
 
 npm install &>> $LOG_FILE
 CHECK $? "Installing denpendencies"
@@ -87,7 +85,6 @@ CHECK $? "enabling catalogue"
 
 systemctl start catalogue &>> $LOG_FILE
 CHECK $? "starting catalogue"
-
 
 cp /root/shell-roboshop/mongo.repo /etc/yum.repos.d
 CHECK $? "copying mongo repo file to repository"

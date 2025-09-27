@@ -52,7 +52,6 @@ CHECK $? "Redis Enabling Public Access"
 sed -i '/protected-mode/c protected-mode no' /etc/redis/redis.conf &>>$log
 validate $? "Protected Mode off"
 
-
 systemctl enable redis  &>> $LOG_FILE
 CHECK $? "Enabling redis"
 

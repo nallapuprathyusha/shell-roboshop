@@ -47,7 +47,6 @@ CHECK $? "enable nodejs"
 dnf install nodejs -y &>> $LOG_FILE
 CHECK $? "intall nodejs"
 
-
 #checking user already available or not if not available it will create if available it will skip
 id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
@@ -60,14 +59,14 @@ fi
 mkdir -p /app  &>> $LOG_FILE
 CHECK $? "creating app director"
 
+rm -rf /app/* &>> $LOG_FILE
+CHECK $? "Removing existing code"
+
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip  &>> $LOG_FILE
 CHECK $? "Downloading user application"
 
 cd /app &>> $LOG_FILE
 CHECK $? "Changing directory"
-
-rm -rf /app/* &>> $LOG_FILE
-CHECK $? "Removing existing code"
 
 unzip /tmp/user.zip &>> $LOG_FILE
 CHECK $? "unziping files"

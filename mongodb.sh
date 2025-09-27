@@ -49,7 +49,6 @@ CHECK $? "mongo installed"
 systemctl enable mongod &>> $LOG_FILE
 CHECK $? "Enable MongoDB"
 
-
 systemctl start mongod &>> $LOG_FILE
 CHECK $? "mongo started"
 
