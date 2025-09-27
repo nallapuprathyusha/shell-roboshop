@@ -1,13 +1,11 @@
 #!bin/bash
 
-
 USERID=$(id -u)
 
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
 
 LOG_FOLDER="/var/log/shell-scripting"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
@@ -20,11 +18,9 @@ mkdir -p  $LOG_FOLDER
 #tee -a <File_name> -  display output and stores in file
 #&>> -<file_name> dont display the output ,just stores the output
 
-
 if [ $USERID -ne 0 ]; then
     echo "your not root user please switch to root user" | tee -a $LOG_FILE
 fi
-
 
 CHECK()
 {
@@ -49,13 +45,8 @@ CHECK $? "enabling redis"
 dnf install redis -y  &>> $LOG_FILE
 CHECK $? "installing redis"
 
-#sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf
-# sed -i -e 's/127.0.0.1/0.0.0.0 -e /protected-mode/c protected-mode no'/etc/redis/redis.conf &>>$log
-sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis/redis.conf &>> $LOG_FILE
-CHECK $? "Redis Enabling Public Access"
-
-sed -i '/protected-mode/c protected-mode no' /etc/redis/redis.conf &>> $LOG_FILE
-CHECK $? "Protected Mode off"
+sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
+CHECK $? "Allowing Remote connections to Redis"
 
 
 systemctl enable redis  &>> $LOG_FILE
