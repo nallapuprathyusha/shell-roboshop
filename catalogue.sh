@@ -62,11 +62,12 @@ CHECK $? "app directory status::"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>> $LOG_FILE
 CHECK $? "Downloading files"
 
+rm -rf app/*
+CHECK $? "removing old files"
+
 cd /app &>> $LOG_FILE
 CHECK $? "Going into directory"
 
-rm -rf app/*
-CHECK $? "removing old files"
 
 unzip /tmp/catalogue.zip &>> $LOG_FILE
 CHECK $? "Unzip the files in app directory"
